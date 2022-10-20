@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Brand1 from "../../../src/assests/Brand.jpeg";
 import Brand2 from "../../../src/assests/Brand22.png";
@@ -14,17 +14,33 @@ import {
   FaTrailer,
 } from "react-icons/fa";
 import { ListGroup } from "react-bootstrap";
+import { AuthContext } from "../../context/AuthProvider/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const RightSideNav = () => {
   const [index, setIndex] = useState(0);
+  const { signWithGoogle } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
 
+  const handleGoogleSignIn = () => {
+    signWithGoogle()
+      .then((result) => {
+        const user = result.user;
+        navigate("/home");
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div>
-      <button className="btn btn-outline-info w-100 mt-3">
+      <button
+        onClick={handleGoogleSignIn}
+        className="btn btn-outline-info w-100 mt-3"
+      >
         <FcGoogle size={25} className="me-2" /> Sign in with Google
       </button>
       <button className="btn btn-outline-dark w-100 mt-3">

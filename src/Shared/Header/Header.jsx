@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Image } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 import LeftSideNav from "../LeftSideNav/LeftSideNav";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
   return (
     <div>
       <Navbar
@@ -16,47 +21,60 @@ const Header = () => {
         className="shadow mb-5"
       >
         <Container>
-          <Navbar.Brand className="fs-2 me-lg-5 text-info" href="#home">
+          <Navbar.Brand className="fs-2 me-lg-5 text-info" href="">
             News portal
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#features" className="text-white fs-5">
-                Home
+              <Nav.Link href="" className="text-white fs-5">
+                <Link className="text-decoration-none" to={"/home"}>
+                  {" "}
+                  Home
+                </Link>
               </Nav.Link>
-              <Nav.Link href="#pricing" className="text-white fs-5">
-                News
-              </Nav.Link>
-              <Nav.Link href="#pricing" className="text-white fs-5"></Nav.Link>
-              <NavDropdown
-                title="Catagory"
-                id="collasible-nav-dropdown"
-                className="text-white fs-5"
-              >
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
               <div className="d-block d-lg-none">
                 <LeftSideNav />
               </div>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets" className="text-white fs-5">
-                Sign In
-              </Nav.Link>
-              <Nav.Link eventKey={2} href="#memes" className="text-white fs-5">
-                Sign Up
-              </Nav.Link>
+              {user?.uid ? (
+                <>
+                  <Nav.Link href="" className="text-white fs-5">
+                    {user?.uid && (
+                      <Link className="text-decoration-none" to={""}>
+                        {user?.email}
+                      </Link>
+                    )}
+                  </Nav.Link>
+                  <Nav.Link href="" className="text-white fs-5">
+                    {user?.uid && (
+                      <Link className="text-decoration-none" to={""}>
+                        <Image roundedCircle src={user?.photoURL}></Image>
+                      </Link>
+                    )}
+                    <button
+                      onClick={logOut}
+                      className="btn btn-info rounded-lg btn-sm ms-3"
+                    >
+                      Log Out
+                    </button>
+                  </Nav.Link>
+                </>
+              ) : (
+                <>
+                  <Nav.Link href="" className="text-white fs-5">
+                    <Link className="text-decoration-none" to={"/login"}>
+                      Sign In
+                    </Link>
+                  </Nav.Link>
+                  <Nav.Link href="" className="text-white fs-5">
+                    <Link className="text-decoration-none" to={"/resister"}>
+                      Resistation
+                    </Link>
+                  </Nav.Link>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

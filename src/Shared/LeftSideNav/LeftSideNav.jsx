@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const LeftSideNav = () => {
   const [catagories, setcatagories] = useState([]);
-  console.log(catagories);
+  // console.log(catagories);
 
   useEffect(() => {
     fetch("http://localhost:5000/news-catagories")
@@ -13,7 +13,7 @@ const LeftSideNav = () => {
 
   return (
     <div>
-      <h4>All catagories </h4>
+      <h4 className="">All catagories </h4> <hr />
       <div>
         {catagories?.map((catagory) => (
           <p key={catagory?.id}>
