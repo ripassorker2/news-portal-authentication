@@ -5,10 +5,8 @@ import { Link, useLoaderData } from "react-router-dom";
 
 const News = () => {
   const news = useLoaderData();
-  console.log(news);
   return (
     <div>
-      {/* <h2>News details</h2> */}
       <Card>
         <Card.Img variant="top" src={news.image_url} />
         <Card.Body>

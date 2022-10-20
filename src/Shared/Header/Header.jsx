@@ -3,7 +3,7 @@ import { Image } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+// import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 import LeftSideNav from "../LeftSideNav/LeftSideNav";
@@ -43,14 +43,18 @@ const Header = () => {
                   <Nav.Link href="" className="text-white fs-5">
                     {user?.uid && (
                       <Link className="text-decoration-none" to={""}>
-                        {user?.email}
+                        {user?.displayName}
                       </Link>
                     )}
                   </Nav.Link>
                   <Nav.Link href="" className="text-white fs-5">
                     {user?.uid && (
                       <Link className="text-decoration-none" to={""}>
-                        <Image roundedCircle src={user?.photoURL}></Image>
+                        <Image
+                          roundedCircle
+                          style={{ height: "30px" }}
+                          src={user?.photoURL}
+                        ></Image>
                       </Link>
                     )}
                     <button
